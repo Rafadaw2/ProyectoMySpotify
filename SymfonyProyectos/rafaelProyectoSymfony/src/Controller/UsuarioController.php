@@ -27,19 +27,6 @@ final class UsuarioController extends AbstractController
         $usuario->setNombre('usuario3');
         $usuario->setFechaNacimiento(new \DateTime('1993-06-08'));
 
-        $genero=new Estilo();
-        $genero->setNombre('house');
-        $genero->setDescripcion('genero house');
-        
-        $perfil=new Perfil();
-        $perfil->setFoto('foto perfil user3');
-        $perfil->setDescripcion('descripcion perfil user3');
-        $perfil->setEstiloMusicaPreferido($genero);
-
-        $usuario->setPerfil($perfil);
-
-        $entityManager->persist($genero);
-        $entityManager->persist($perfil);
         $entityManager->persist($usuario);
 
         $entityManager->flush();

@@ -15,11 +15,17 @@ class Estilo
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 30)]
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255)]
     private ?string $descripcion = null;
+
+    /**
+     * @var Collection<int, Perfil>
+     */
+    #[ORM\ManyToMany(targetEntity: Perfil::class, mappedBy: 'estilosMusicalesPreferidos')]
+    private Collection $perfils;
 
     /**
      * @var Collection<int, Cancion>
@@ -27,28 +33,15 @@ class Estilo
     #[ORM\OneToMany(targetEntity: Cancion::class, mappedBy: 'genero')]
     private Collection $cancions;
 
-    /**
-     * @var Collection<int, Perfil>
-     */
-    #[ORM\OneToMany(targetEntity: Perfil::class, mappedBy: 'estiloMusicaPreferido')]
-    private Collection $perfils;
-
     public function __construct()
     {
-        $this->cancions = new ArrayCollection();
         $this->perfils = new ArrayCollection();
+        $this->cancions = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getNombre(): ?string
@@ -71,6 +64,33 @@ class Estilo
     public function setDescripcion(string $descripcion): static
     {
         $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Perfil>
+     */
+    public function getPerfils(): Collection
+    {
+        return $this->perfils;
+    }
+
+    public function addPerfil(Perfil $perfil): static
+    {
+        if (!$this->perfils->contains($perfil)) {
+            $this->perfils->add($perfil);
+            $perfil->addEstilosMusicalesPreferido($this);
+        }
+
+        return $this;
+    }
+
+    public function removePerfil(Perfil $perfil): static
+    {
+        if ($this->perfils->removeElement($perfil)) {
+            $perfil->removeEstilosMusicalesPreferido($this);
+        }
 
         return $this;
     }
@@ -99,36 +119,6 @@ class Estilo
             // set the owning side to null (unless already changed)
             if ($cancion->getGenero() === $this) {
                 $cancion->setGenero(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Perfil>
-     */
-    public function getPerfils(): Collection
-    {
-        return $this->perfils;
-    }
-
-    public function addPerfil(Perfil $perfil): static
-    {
-        if (!$this->perfils->contains($perfil)) {
-            $this->perfils->add($perfil);
-            $perfil->setEstiloMusicaPreferido($this);
-        }
-
-        return $this;
-    }
-
-    public function removePerfil(Perfil $perfil): static
-    {
-        if ($this->perfils->removeElement($perfil)) {
-            // set the owning side to null (unless already changed)
-            if ($perfil->getEstiloMusicaPreferido() === $this) {
-                $perfil->setEstiloMusicaPreferido(null);
             }
         }
 

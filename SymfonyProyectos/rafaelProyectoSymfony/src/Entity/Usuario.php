@@ -16,17 +16,26 @@ class Usuario
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 100)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 12)]
     private ?string $password = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 20)]
     private ?string $nombre = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $fechaNacimiento = null;
+
+    #[ORM\OneToOne(inversedBy: 'usuario', cascade: ['persist', 'remove'])]
+    private ?Perfil $perfil = null;
+
+    /**
+     * @var Collection<int, Playlist>
+     */
+    #[ORM\OneToMany(targetEntity: Playlist::class, mappedBy: 'propietario')]
+    private Collection $playlists;
 
     /**
      * @var Collection<int, UsuarioPlaylist>
@@ -35,31 +44,21 @@ class Usuario
     private Collection $usuarioPlaylists;
 
     /**
-     * @var Collection<int, Playlist>
+     * @var Collection<int, Cancion>
      */
-    #[ORM\OneToMany(targetEntity: Playlist::class, mappedBy: 'propietario', orphanRemoval: true)]
-    private Collection $playlists;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Perfil $perfil = null;
+    #[ORM\ManyToMany(targetEntity: Cancion::class, mappedBy: 'reproducir')]
+    private Collection $cancions;
 
     public function __construct()
     {
-        $this->usuarioPlaylists = new ArrayCollection();
         $this->playlists = new ArrayCollection();
+        $this->usuarioPlaylists = new ArrayCollection();
+        $this->cancions = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -110,32 +109,14 @@ class Usuario
         return $this;
     }
 
-    /**
-     * @return Collection<int, UsuarioPlaylist>
-     */
-    public function getUsuarioPlaylists(): Collection
+    public function getPerfil(): ?Perfil
     {
-        return $this->usuarioPlaylists;
+        return $this->perfil;
     }
 
-    public function addUsuarioPlaylist(UsuarioPlaylist $usuarioPlaylist): static
+    public function setPerfil(?Perfil $perfil): static
     {
-        if (!$this->usuarioPlaylists->contains($usuarioPlaylist)) {
-            $this->usuarioPlaylists->add($usuarioPlaylist);
-            $usuarioPlaylist->setUsuario($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUsuarioPlaylist(UsuarioPlaylist $usuarioPlaylist): static
-    {
-        if ($this->usuarioPlaylists->removeElement($usuarioPlaylist)) {
-            // set the owning side to null (unless already changed)
-            if ($usuarioPlaylist->getUsuario() === $this) {
-                $usuarioPlaylist->setUsuario(null);
-            }
-        }
+        $this->perfil = $perfil;
 
         return $this;
     }
@@ -170,14 +151,59 @@ class Usuario
         return $this;
     }
 
-    public function getPerfil(): ?Perfil
+    /**
+     * @return Collection<int, UsuarioPlaylist>
+     */
+    public function getUsuarioPlaylists(): Collection
     {
-        return $this->perfil;
+        return $this->usuarioPlaylists;
     }
 
-    public function setPerfil(Perfil $perfil): static
+    public function addUsuarioPlaylist(UsuarioPlaylist $usuarioPlaylist): static
     {
-        $this->perfil = $perfil;
+        if (!$this->usuarioPlaylists->contains($usuarioPlaylist)) {
+            $this->usuarioPlaylists->add($usuarioPlaylist);
+            $usuarioPlaylist->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsuarioPlaylist(UsuarioPlaylist $usuarioPlaylist): static
+    {
+        if ($this->usuarioPlaylists->removeElement($usuarioPlaylist)) {
+            // set the owning side to null (unless already changed)
+            if ($usuarioPlaylist->getUsuario() === $this) {
+                $usuarioPlaylist->setUsuario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cancion>
+     */
+    public function getCancions(): Collection
+    {
+        return $this->cancions;
+    }
+
+    public function addCancion(Cancion $cancion): static
+    {
+        if (!$this->cancions->contains($cancion)) {
+            $this->cancions->add($cancion);
+            $cancion->addReproducir($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCancion(Cancion $cancion): static
+    {
+        if ($this->cancions->removeElement($cancion)) {
+            $cancion->removeReproducir($this);
+        }
 
         return $this;
     }

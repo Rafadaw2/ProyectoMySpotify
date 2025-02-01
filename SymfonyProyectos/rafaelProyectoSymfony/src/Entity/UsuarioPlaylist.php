@@ -13,18 +13,30 @@ class UsuarioPlaylist
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column]
+    private ?int $reproducida = null;
+
     #[ORM\ManyToOne(inversedBy: 'usuarioPlaylists')]
     private ?Usuario $usuario = null;
 
     #[ORM\ManyToOne(inversedBy: 'usuarioPlaylists')]
     private ?Playlist $playlist = null;
 
-    #[ORM\Column]
-    private ?int $reproducida = null;
-
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getReproducida(): ?int
+    {
+        return $this->reproducida;
+    }
+
+    public function setReproducida(int $reproducida): static
+    {
+        $this->reproducida = $reproducida;
+
+        return $this;
     }
 
     public function getUsuario(): ?Usuario
@@ -47,18 +59,6 @@ class UsuarioPlaylist
     public function setPlaylist(?Playlist $playlist): static
     {
         $this->playlist = $playlist;
-
-        return $this;
-    }
-
-    public function getReproducida(): ?int
-    {
-        return $this->reproducida;
-    }
-
-    public function setReproducida(int $reproducida): static
-    {
-        $this->reproducida = $reproducida;
 
         return $this;
     }

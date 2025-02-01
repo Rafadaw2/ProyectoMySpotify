@@ -19,6 +19,9 @@ class PlaylistCancion
     #[ORM\ManyToOne(inversedBy: 'playlistCancions')]
     private ?Cancion $cancion = null;
 
+    #[ORM\Column]
+    private ?int $repdroducciones = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class PlaylistCancion
     public function setCancion(?Cancion $cancion): static
     {
         $this->cancion = $cancion;
+
+        return $this;
+    }
+
+    public function getRepdroducciones(): ?int
+    {
+        return $this->repdroducciones;
+    }
+
+    public function setRepdroducciones(int $repdroducciones): static
+    {
+        $this->repdroducciones = $repdroducciones;
 
         return $this;
     }
