@@ -34,6 +34,8 @@ class Cancion
     private ?int $likes = null;
 
     #[ORM\ManyToOne(inversedBy: 'cancions')]
+    #[ORM\JoinColumn(nullable: false)]
+
     private ?Estilo $genero = null;
 
     /**
@@ -142,6 +144,12 @@ class Cancion
 
         return $this;
     }
+    
+    public function __toString(): string
+{
+    return $this->titulo ?? 'Sin título';
+}
+
 
     /**
      * @return Collection<int, PlaylistCancion>

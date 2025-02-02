@@ -30,7 +30,8 @@ class Estilo
     /**
      * @var Collection<int, Cancion>
      */
-    #[ORM\OneToMany(targetEntity: Cancion::class, mappedBy: 'genero')]
+    #[ORM\OneToMany(targetEntity: Cancion::class, mappedBy: 'genero', cascade:
+    ['persist'])]
     private Collection $cancions;
 
     public function __construct()
@@ -67,6 +68,12 @@ class Estilo
 
         return $this;
     }
+
+    public function __toString(): string
+{
+    return $this->nombre ?? 'Sin nombre';
+}
+
 
     /**
      * @return Collection<int, Perfil>
