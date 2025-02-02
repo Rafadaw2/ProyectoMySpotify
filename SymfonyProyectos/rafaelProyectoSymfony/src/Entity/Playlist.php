@@ -15,10 +15,10 @@ class Playlist
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     private ?string $nombre = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 20)]
     private ?string $visibilidad = null;
 
     #[ORM\Column]
@@ -26,6 +26,9 @@ class Playlist
 
     #[ORM\Column]
     private ?int $likes = null;
+
+    #[ORM\ManyToOne(inversedBy: 'playlists')]
+    private ?Usuario $propietario = null;
 
     /**
      * @var Collection<int, UsuarioPlaylist>
@@ -39,12 +42,6 @@ class Playlist
     #[ORM\OneToMany(targetEntity: PlaylistCancion::class, mappedBy: 'playlist')]
     private Collection $playlistCancions;
 
-  
-
-    #[ORM\ManyToOne(inversedBy: 'playlists')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Usuario $propietario = null;
-
     public function __construct()
     {
         $this->usuarioPlaylists = new ArrayCollection();
@@ -54,13 +51,6 @@ class Playlist
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getNombre(): ?string
@@ -107,6 +97,18 @@ class Playlist
     public function setLikes(int $likes): static
     {
         $this->likes = $likes;
+
+        return $this;
+    }
+
+    public function getPropietario(): ?Usuario
+    {
+        return $this->propietario;
+    }
+
+    public function setPropietario(?Usuario $propietario): static
+    {
+        $this->propietario = $propietario;
 
         return $this;
     }
@@ -167,43 +169,6 @@ class Playlist
                 $playlistCancion->setPlaylist(null);
             }
         }
-
-        return $this;
-    }
-
-    /*
-     * @return Collection<int, Cancion>
-     */
-    /*
-    public function getCancion(): Collection
-    {
-        return $this->cancion;
-    }
-
-    public function addCancion(Cancion $cancion): static
-    {
-        if (!$this->cancion->contains($cancion)) {
-            $this->cancion->add($cancion);
-        }
-
-        return $this;
-    }
-
-    public function removeCancion(Cancion $cancion): static
-    {
-        $this->cancion->removeElement($cancion);
-
-        return $this;
-    }*/
-
-    public function getPropietario(): ?Usuario
-    {
-        return $this->propietario;
-    }
-
-    public function setPropietario(?Usuario $propietario): static
-    {
-        $this->propietario = $propietario;
 
         return $this;
     }

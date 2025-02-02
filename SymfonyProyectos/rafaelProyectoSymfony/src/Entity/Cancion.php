@@ -33,36 +33,32 @@ class Cancion
     #[ORM\Column]
     private ?int $likes = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cancions')]
+    #[ORM\JoinColumn(nullable: false)]
+
+    private ?Estilo $genero = null;
+
     /**
      * @var Collection<int, PlaylistCancion>
      */
     #[ORM\OneToMany(targetEntity: PlaylistCancion::class, mappedBy: 'cancion')]
     private Collection $playlistCancions;
 
-    #[ORM\ManyToOne(inversedBy: 'cancions')]
-    private ?Estilo $genero = null;
-
     /**
-     * @var Collection<int, Playlist>
+     * @var Collection<int, Usuario>
      */
-
-
+    #[ORM\ManyToMany(targetEntity: Usuario::class, inversedBy: 'cancions')]
+    private Collection $reproducir;
 
     public function __construct()
     {
         $this->playlistCancions = new ArrayCollection();
+        $this->reproducir = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getTitulo(): ?string
@@ -137,6 +133,24 @@ class Cancion
         return $this;
     }
 
+    public function getGenero(): ?Estilo
+    {
+        return $this->genero;
+    }
+
+    public function setGenero(?Estilo $genero): static
+    {
+        $this->genero = $genero;
+
+        return $this;
+    }
+    
+    public function __toString(): string
+{
+    return $this->titulo ?? 'Sin título';
+}
+
+
     /**
      * @return Collection<int, PlaylistCancion>
      */
@@ -167,44 +181,27 @@ class Cancion
         return $this;
     }
 
-    /*
-     * @return Collection<int, Playlist>
+    /**
+     * @return Collection<int, Usuario>
      */
-    /*public function getPlaylists(): Collection
+    public function getReproducir(): Collection
     {
-        return $this->playlists;
+        return $this->reproducir;
     }
 
-    public function addPlaylist(Playlist $playlist): static
+    public function addReproducir(Usuario $reproducir): static
     {
-        if (!$this->playlists->contains($playlist)) {
-            $this->playlists->add($playlist);
-            $playlist->addCancion($this);
+        if (!$this->reproducir->contains($reproducir)) {
+            $this->reproducir->add($reproducir);
         }
 
         return $this;
     }
 
-    public function removePlaylist(Playlist $playlist): static
+    public function removeReproducir(Usuario $reproducir): static
     {
-        if ($this->playlists->removeElement($playlist)) {
-            $playlist->removeCancion($this);
-        }
-
-        return $this;
-    }*/
-
-    public function getGenero(): ?Estilo
-    {
-        return $this->genero;
-    }
-
-    public function setGenero(?Estilo $genero): static
-    {
-        $this->genero = $genero;
+        $this->reproducir->removeElement($reproducir);
 
         return $this;
     }
-
- 
 }

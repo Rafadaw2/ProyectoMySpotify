@@ -24,12 +24,7 @@ final class PerfilController extends AbstractController
         $perfil=new Perfil();
         $perfil->setFoto('fotoperfil');
         $perfil->setDescripcion('foto de este perfil');
-        $estiloPreferido=new Estilo();
-        $estiloPreferido->setNombre('Trap');
-        $estiloPreferido->setDescripcion('genero trap');
-        $perfil->setEstiloMusicaPreferido($estiloPreferido);
 
-        $entityManager->persist($estiloPreferido);
         $entityManager->persist($perfil);
         $entityManager->flush();
         
