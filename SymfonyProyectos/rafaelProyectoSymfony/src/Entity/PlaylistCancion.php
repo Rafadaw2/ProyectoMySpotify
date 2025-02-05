@@ -19,7 +19,7 @@ class PlaylistCancion
     #[ORM\ManyToOne(inversedBy: 'playlistCancions')]
     private ?Cancion $cancion = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $repdroducciones = null;
 
     public function getId(): ?int
@@ -62,4 +62,10 @@ class PlaylistCancion
 
         return $this;
     }
+    public function __toString(): string
+    {
+        return $this->getCancion()->getTitulo() ?? 'Sin nombre';
+    }
+
+   
 }

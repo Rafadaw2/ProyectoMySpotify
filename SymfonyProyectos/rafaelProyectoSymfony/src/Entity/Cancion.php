@@ -34,7 +34,7 @@ class Cancion
     private ?int $likes = null;
 
     #[ORM\ManyToOne(inversedBy: 'cancions')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
 
     private ?Estilo $genero = null;
 

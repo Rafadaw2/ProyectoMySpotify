@@ -27,19 +27,20 @@ class Playlist
     #[ORM\Column]
     private ?int $likes = null;
 
-    #[ORM\ManyToOne(inversedBy: 'playlists')]
+    #[ORM\ManyToOne(targetEntity: Usuario::class, inversedBy: 'playlists')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Usuario $propietario = null;
 
     /**
      * @var Collection<int, UsuarioPlaylist>
      */
-    #[ORM\OneToMany(targetEntity: UsuarioPlaylist::class, mappedBy: 'playlist')]
+    #[ORM\OneToMany(targetEntity: UsuarioPlaylist::class, mappedBy: 'playlist',cascade:['persist'])]
     private Collection $usuarioPlaylists;
 
     /**
      * @var Collection<int, PlaylistCancion>
      */
-    #[ORM\OneToMany(targetEntity: PlaylistCancion::class, mappedBy: 'playlist')]
+    #[ORM\OneToMany(targetEntity: PlaylistCancion::class, mappedBy: 'playlist',cascade:['persist'])]
     private Collection $playlistCancions;
 
     public function __construct()
