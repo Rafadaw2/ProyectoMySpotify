@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySpotify</title>
+    <link rel="stylesheet" href="../../public/css/inicio.css.twig.css">
+</head>
+
+<body>
+    <header class="encabezado">
+        <img id="logoSpotify" src="../../public/img/logoSpotify.png" alt="">
+
+        <div id="contBusqueda">
+            <input type="text" id="songName" placeholder="¿Qué canción quieres escuchar?">
+            <a id="contLupa" onclick="modificarSrc()" >
+                <img id="lupa" src="../../public/img/buscar.png" alt="" >
+            </a>
+        </div>
+
+        <a id="contCuenta" href="">
+            <img id="cuenta" src="../../public/img/cuenta.png" alt="">
+        </a>
+    </header>
+
+    <div class="divNav">
+        <!-- Menú de navegación -->
+        <nav class="nav">
+            <ul>
+                <li><a href="#">Canciones</a></li>
+                <li><a href="#">Playlist</a></li>
+            </ul>
+        </nav>
+
+        <!-- Contenido principal -->
+        <main class="contenido">
+            {% block titulo %}{% endblock %}
+            {% block contenido %}{% endblock %}
+        </main>
+
+    </div>
+    <div id="reproductor">
+        <audio id="audioPlayer" controls >
+            Tu navegador no soporta el elemento de audio.
+        </audio>
+
+    </div>
+
+    <footer>
+        <h5>© 2025, MySpotify. Todos los derechos reservados</h5>
+        <h6>Síguenos en redes</h6>
+        <a href=""><img src="../../public/img/face.png" alt=""></a>
+        <a href=""><img src="../../public/img/x.png" alt=""></a>
+        <a href=""><img src="../../public/img/insta.png" alt=""></a>
+        <a href=""><img src="../../public/img/tiktok.png" alt=""></a>
+    </footer>
+    <script src="../../public/script/script.js"></script>
+</body>
+
+</html>

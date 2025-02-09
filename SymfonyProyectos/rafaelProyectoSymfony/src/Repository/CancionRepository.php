@@ -16,6 +16,23 @@ class CancionRepository extends ServiceEntityRepository
         parent::__construct($registry, Cancion::class);
     }
 
+    public function getCancionesMasEscuchadas(int $num = 3) {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.reproducciones', 'DESC')
+            ->setMaxResults($num)
+            ->getQuery()
+            ->getResult();
+    }
+    
+
+    public function getCanciones() : array {
+        $conn=$this->getEntityManager()->getConnection();
+        $sql='SELECT * 
+                FROM cancion ';
+        $resulSet=$conn->executeQuery($sql);
+
+        return $resulSet->fetchAllAssociative();
+    }
     //    /**
     //     * @return Cancion[] Returns an array of Cancion objects
     //     */

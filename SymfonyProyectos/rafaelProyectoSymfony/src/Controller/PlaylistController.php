@@ -6,6 +6,7 @@ use App\Entity\Playlist;
 use App\Entity\Usuario;
 use App\Entity\Perfil;
 use App\Entity\Estilo;
+use App\Repository\PlaylistRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,15 @@ final class PlaylistController extends AbstractController
     {
         return $this->render('playlist/index.html.twig', [
             'controller_name' => 'PlaylistController',
+        ]);
+    }
+    #[Route('/playlist/all', name: 'show_playlist')]
+    public function mostrarTodas(PlaylistRepository $playlistRepository): Response
+    {
+        $playlist= $playlistRepository->getPlaylist();
+        return $this->render('playlist/index.html.twig', [
+            'titulo' => 'Playlist disponibles',
+            'playlists' => $playlist,
         ]);
     }
     #[Route('/playlist/new', name: 'new_playlist')]

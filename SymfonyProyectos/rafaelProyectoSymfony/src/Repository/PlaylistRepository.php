@@ -15,6 +15,14 @@ class PlaylistRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Playlist::class);
     }
+    public function getPlaylist() : array {
+        $conn=$this->getEntityManager()->getConnection();
+        $sql='SELECT * 
+                FROM playlist ';
+        $resulSet=$conn->executeQuery($sql);
+
+        return $resulSet->fetchAllAssociative();
+    }
 
     //    /**
     //     * @return Playlist[] Returns an array of Playlist objects

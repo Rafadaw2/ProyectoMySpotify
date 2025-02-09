@@ -1,0 +1,14 @@
+{% extends 'plantilla.html.twig' %}
+{% block titulo %}{{titulo}}{% endblock %}
+{% block contenido %}
+<div class="canciones">
+{% for cancion in canciones %}
+            <figure onclick="modificarSrc('{{cancion.titulo}}')">
+                <img class="caratula" src="{{ asset('img/' ~ cancion.autor ~ '.jpg') }}" alt="">
+
+                </img>
+                <figcaption>{{cancion.titulo}}</figcaption>
+            </figure>
+{% endfor %}
+</div>
+{% endblock %}

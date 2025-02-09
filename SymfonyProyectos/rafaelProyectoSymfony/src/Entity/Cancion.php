@@ -50,6 +50,9 @@ class Cancion
     #[ORM\ManyToMany(targetEntity: Usuario::class, inversedBy: 'cancions')]
     private Collection $reproducir;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $archivo = null;
+
     public function __construct()
     {
         $this->playlistCancions = new ArrayCollection();
@@ -201,6 +204,18 @@ class Cancion
     public function removeReproducir(Usuario $reproducir): static
     {
         $this->reproducir->removeElement($reproducir);
+
+        return $this;
+    }
+
+    public function getArchivo(): ?string
+    {
+        return $this->archivo;
+    }
+
+    public function setArchivo(?string $archivo): static
+    {
+        $this->archivo = $archivo;
 
         return $this;
     }
