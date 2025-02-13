@@ -4,30 +4,20 @@ namespace App\Controller;
 use App\Entity\Cancion;
 use App\Repository\CancionRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use LDAP\Result;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 USE Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-use function PHPUnit\Framework\fileExists;
 
 final class CancionController extends AbstractController
 {
-    #[Route('/cancion', name: 'app_cancion')]
-    public function index(CancionRepository $cancionRepository): Response
-    {
-        $canciones= $cancionRepository->getCancionesMasEscuchadas();
-        return $this->render('inicio/inicio.html.twig', [
-            'titulo' => 'Bienvenido a MySpotify',
-            'canciones' => $canciones,
-        ]);
-    }
-    #[Route('/cancion/all', name: 'show_canciones')]
+
+    #[Route('/cancion', name: 'show_canciones')]
     public function mostrarTodas(CancionRepository $cancionRepository): Response
     {
         $canciones= $cancionRepository->getCanciones();
-        return $this->render('inicio/inicio.html.twig', [
+        return $this->render('cancion/index.html.twig', [
             'titulo' => 'Todo lo que te puedas imaginar',
             'canciones' => $canciones,
         ]);

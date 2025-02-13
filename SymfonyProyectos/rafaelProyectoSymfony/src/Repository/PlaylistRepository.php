@@ -23,6 +23,16 @@ class PlaylistRepository extends ServiceEntityRepository
 
         return $resulSet->fetchAllAssociative();
     }
+    
+   public function getPlaylistMasEscuchadas($num=3): array
+   {
+       return $this->createQueryBuilder('p')
+           ->orderBy('p.reproducciones', 'DESC')
+           ->setMaxResults($num)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
     //    /**
     //     * @return Playlist[] Returns an array of Playlist objects

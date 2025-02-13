@@ -3,12 +3,14 @@
 {% block contenido %}
 <div class="canciones">
 {% for playlist in playlists %}
-            <figure onclick="">
+        <a href="/playlist/cancions/{{playlist.id}}">
+            <figure>
                 <img class="caratula" src="{{ asset('img/playlist.jpg') }}" alt="">
 
                 </img>
                 <figcaption>{{playlist.nombre}}</figcaption>
             </figure>
+        </a>
 {% endfor %}
 </div>
 {% endblock %}
