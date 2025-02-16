@@ -13,7 +13,7 @@ USE Symfony\Component\HttpFoundation\BinaryFileResponse;
 final class CancionController extends AbstractController
 {
 
-    #[Route('/cancion', name: 'show_canciones')]
+    #[Route('/user/cancion', name: 'show_canciones')]
     public function mostrarTodas(CancionRepository $cancionRepository): Response
     {
         $canciones= $cancionRepository->getCanciones();
@@ -22,26 +22,26 @@ final class CancionController extends AbstractController
             'canciones' => $canciones,
         ]);
     }
-    #[Route('/cancion/new', name: 'new_cancion')]
-    public function new(EntityManagerInterface $entityManager): Response
-    {
-        $cancion=new Cancion();
-        $cancion->setTitulo('cancion1');
-        $cancion->setDuracion(120);
-        $cancion->setAlbum('album1');
-        $cancion->setAutor('autor1');
+    // #[Route('/cancion/new', name: 'new_cancion')]
+    // public function new(EntityManagerInterface $entityManager): Response
+    // {
+    //     $cancion=new Cancion();
+    //     $cancion->setTitulo('cancion1');
+    //     $cancion->setDuracion(120);
+    //     $cancion->setAlbum('album1');
+    //     $cancion->setAutor('autor1');
   
-        $cancion->setReproducciones(1);
-        $cancion->setLikes(1);
+    //     $cancion->setReproducciones(1);
+    //     $cancion->setLikes(1);
 
-        $entityManager->persist($cancion);
+    //     $entityManager->persist($cancion);
 
-        $entityManager->flush();
+    //     $entityManager->flush();
 
-        return $this->render('cancion/index.html.twig', [
-            'controller_name' => 'CancionController',
-        ]);
-    }
+    //     return $this->render('cancion/index.html.twig', [
+    //         'controller_name' => 'CancionController',
+    //     ]);
+    // }
     #[Route('/cancion/{songName}/play', name: 'play_music', methods:['GET'])]
     public function playMusic(string $songName): Response
     {

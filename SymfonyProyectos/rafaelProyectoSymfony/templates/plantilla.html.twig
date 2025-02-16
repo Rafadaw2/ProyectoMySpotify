@@ -10,7 +10,7 @@
 
 <body>
     <header class="encabezado">
-        <img id="logoSpotify" src="{{asset('img/logoSpotify.png')}}" alt="">
+        <a href="/index"><img id="logoSpotify" src="{{asset('img/logoSpotify.png')}}" alt=""  ></a>
 
         <div id="contBusqueda">
             <input type="text" id="songName" placeholder="¿Qué canción quieres escuchar?">
@@ -27,8 +27,13 @@
     <div class="divNav">
         <nav class="nav">
             <ul>
-                <li><a href="/cancion">Canciones</a></li>
-                <li><a href="/playlist">Playlist</a></li>
+                <li><a href="/user/cancion">Canciones</a></li>
+                <li><a href="/user/playlist">Playlist</a></li>
+                {% if app.user %}
+                    <li><a href="/logout">Cerrar sesión</a></li>
+                {% else %}
+                    <li><a href="/login">Iniciar sesión</a></li>
+                {% endif %}
             </ul>
         </nav>
 

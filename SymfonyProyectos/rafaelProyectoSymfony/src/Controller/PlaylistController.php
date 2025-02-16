@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class PlaylistController extends AbstractController
 {
 
-    #[Route('/playlist', name: 'show_playlist')]
+    #[Route('/user/playlist', name: 'show_playlist')]
     public function mostrarTodas(PlaylistRepository $playlistRepository): Response
     {
         $playlist= $playlistRepository->getPlaylist();
@@ -42,21 +42,21 @@ final class PlaylistController extends AbstractController
         ]);
     }
 
-    #[Route('/playlist/new', name: 'new_playlist')]
-    public function new(EntityManagerInterface $entityManager): Response
-    {
-        $playlist=new Playlist();
-        $playlist->setNombre('Tops verano');
-        $playlist->setVisibilidad('privada');
-        $playlist->setReproducciones(3);
-        $playlist->setLikes(2);
+    // #[Route('/playlist/new', name: 'new_playlist')]
+    // public function new(EntityManagerInterface $entityManager): Response
+    // {
+    //     $playlist=new Playlist();
+    //     $playlist->setNombre('Tops verano');
+    //     $playlist->setVisibilidad('privada');
+    //     $playlist->setReproducciones(3);
+    //     $playlist->setLikes(2);
 
-        $entityManager->persist($playlist);
+    //     $entityManager->persist($playlist);
 
-        $entityManager->flush();
+    //     $entityManager->flush();
 
-        return $this->render('playlist/index.html.twig', [
-            'controller_name' => 'PlaylistController',
-        ]);
-    }
+    //     return $this->render('playlist/index.html.twig', [
+    //         'controller_name' => 'PlaylistController',
+    //     ]);
+    // }
 }
