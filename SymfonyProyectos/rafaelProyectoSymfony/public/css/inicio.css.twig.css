@@ -144,6 +144,18 @@ footer {
     flex-wrap: wrap;
     
 }
+.stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    position: relative;
+}
+.canva{
+    margin: 3% !important;
+    
+}
 figcaption{
     text-align: center;
 }

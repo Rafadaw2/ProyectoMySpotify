@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySpotify</title>
+    <link rel="stylesheet" href="{{asset('css/inicio.css.twig.css')}}">
+</head>
+
+<body>
+    <header class="encabezado">
+        <a href="/index"><img id="logoSpotify" src="{{asset('img/logoSpotify.png')}}" alt=""  ></a>
+
+        
+
+        <a id="contCuenta" href="">
+            <img id="cuenta" src="{{asset('img/cuenta.png')}}" alt="">
+        </a>
+    </header>
+
+    <div class="divNav">
+        <nav class="nav">
+            <ul>
+            
+                {% if app.user %}
+                    <li><a href="/logout">Cerrar sesión</a></li>
+                {% else %}
+                    <li><a href="/login">Iniciar sesión</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <main class="contenido">
+            {% block titulo %}{% endblock %}
+            {% block contenido %}{% endblock %}
+        </main>
+        
+    </div>
+    
+</body>
+
+</html>

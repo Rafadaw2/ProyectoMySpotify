@@ -1,0 +1,172 @@
+{% extends 'plantillaSimple.html.twig' %}
+{% block titulo %}<h1>{{titulo}}</h1>{% endblock %}
+{% block contenido %}
+<div class="stats">
+    <canvas class="canva" id="reprosPlaylist"></canvas>
+    <canvas class="canva" id="likesPlaylist"></canvas>
+    <canvas class="canva" id="edadUser"></canvas>
+    <canvas class="canva" id="reprosCancion"></canvas>
+    <canvas class="canva" id="reprosEstilo"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    fetch("{{ path('app_Playlist') }}")
+        .then(response => response.json())
+        .then(data => {
+            const labels = data.map(item => item.nombre);
+            const values = data.map(item => item.reproducciones);
+            const ctx = document.getElementById('reprosPlaylist').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Reproducciones',
+                        data: values,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+
+    fetch("{{ path('app_Playlist') }}")
+        .then(response => response.json())
+        .then(data => {
+            const labelsLikes = data.map(item => item.nombre);
+            const valuesLikes = data.map(item => item.likes);
+            const ctx1 = document.getElementById('likesPlaylist').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: labelsLikes,
+                    datasets: [{
+                        label: 'Total Likes',
+                        data: valuesLikes,
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+
+    fetch("{{ path('app_statsEdad') }}")
+        .then(response => response.json())
+        .then(data => {
+            const labelsEdad = data.map(item => item.tramo);
+            const valuesEdad = data.map(item => item.usuarios);
+            const ctx3 = document.getElementById('edadUser').getContext('2d');
+            new Chart(ctx3, {
+                type: 'doughnut',
+                data: {
+                    labels: labelsEdad,
+                    datasets: [{
+                        label: 'Usuarios por Tramo de Edad',
+                        data: valuesEdad,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(75, 192, 192, 0.5)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        });
+
+       fetch("{{ path('app_statsCanciones') }}")
+        .then(response => response.json())
+        .then(data => {
+            const labelsLikes = data.map(item => item.nombre);
+            const valuesLikes = data.map(item => item.reproducciones);
+            const ctx4 = document.getElementById('reprosCancion').getContext('2d');
+            new Chart(ctx4, {
+                type: 'bar',
+                data: {
+                    labels: labelsLikes,
+                    datasets: [{
+                        label: 'Total Reproducciones',
+                        data: valuesLikes,
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            maintainAspectRatio: false
+                        }
+                    }
+                }
+            });
+        });
+
+               fetch("{{ path('app_statsEstilos') }}")
+        .then(response => response.json())
+        .then(data => {
+            const labelsLikes = data.map(item => item.nombre);
+            const valuesLikes = data.map(item => item.repros);
+            const ctx4 = document.getElementById('reprosEstilo').getContext('2d');
+            new Chart(ctx4, {
+                type: 'bar',
+                data: {
+                    labels: labelsLikes,
+                    datasets: [{
+                        label: 'Total Reproducciones',
+                        data: valuesLikes,
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            maintainAspectRatio: false
+                        }
+                    }
+                }
+            });
+        });
+
+});
+</script>
+
+{% endblock %}

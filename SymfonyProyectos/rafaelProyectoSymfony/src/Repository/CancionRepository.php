@@ -33,6 +33,19 @@ class CancionRepository extends ServiceEntityRepository
 
         return $resulSet->fetchAllAssociative();
     }
+
+    public function getReprosPorEstilo() : array {
+        
+        $conn=$this->getEntityManager()->getConnection();
+        $sql='SELECT e.nombre,SUM(c.reproducciones) as repros 
+                FROM cancion c join estilo e 
+                on c.genero_id = e.id 
+                GROUP BY c.genero_id';
+        $resulSet=$conn->executeQuery($sql);
+
+        return $resulSet->fetchAllAssociative();
+
+    }
     //    /**
     //     * @return Cancion[] Returns an array of Cancion objects
     //     */
