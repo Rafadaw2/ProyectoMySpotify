@@ -142,6 +142,7 @@ footer {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    position: relative;
     
 }
 .stats {
@@ -149,6 +150,7 @@ footer {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    height: 500px;
     width: 100%;
     position: relative;
 }

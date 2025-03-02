@@ -1,0 +1,17 @@
+{% extends 'plantilla.html.twig' %}
+{% block titulo %}{{nombre}}{% endblock %}
+{% block contenido %}
+    <div class="canciones">
+    <label>Nombre<input type="text" name="nombre" id="nombre"></label>
+    <label>Visibilidad <input type="checkbox" name="" id="visibilidad"></label>
+    </div>
+<hr>
+<h5>Canciones: </h5>
+<div class="canciones">
+
+{% for cancion in canciones %}
+    <label>{{cancion.titulo }}<input class="songs" type="checkbox" name="" id="{{cancion.id}}"></label>
+{% endfor %}
+    <button onclick="crearPlaylist()">Crear</button>
+</div>
+{% endblock %}

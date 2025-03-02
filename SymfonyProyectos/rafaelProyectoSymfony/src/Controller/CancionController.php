@@ -13,7 +13,7 @@ USE Symfony\Component\HttpFoundation\BinaryFileResponse;
 final class CancionController extends AbstractController
 {
 
-    #[Route('/user/cancion', name: 'show_canciones')]
+    #[Route('/cancion', name: 'show_canciones')]
     public function mostrarTodas(CancionRepository $cancionRepository): Response
     {
         $canciones= $cancionRepository->getCanciones();

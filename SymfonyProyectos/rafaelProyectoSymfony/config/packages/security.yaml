@@ -30,12 +30,15 @@ security:
                 login_path: app_login
                 check_path: app_login
                 default_target_path: app_index
-
+    role_hierarchy:
+        ROLE_USER: []      
+        ROLE_MANAGER: []   
+        ROLE_ADMIN: []
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/user, roles: ROLE_USUARIO }
         - { path: ^/manager, roles: ROLE_MANAGER }
 
 when@test:

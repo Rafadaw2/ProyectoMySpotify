@@ -23,6 +23,13 @@ class CancionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function getCoincidenciasCanciones(string $subcadena) {
+        return $this->createQueryBuilder('c')
+            ->where('c.titulo LIKE :subcadena')
+            ->setParameter('subcadena', '%' . $subcadena . '%')
+            ->getQuery()
+            ->getResult();
+    }
     
 
     public function getCanciones() : array {

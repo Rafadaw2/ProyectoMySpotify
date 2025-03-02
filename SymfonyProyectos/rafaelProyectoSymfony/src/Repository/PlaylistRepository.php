@@ -16,12 +16,14 @@ class PlaylistRepository extends ServiceEntityRepository
         parent::__construct($registry, Playlist::class);
     }
     public function getPlaylist() : array {
-        $conn=$this->getEntityManager()->getConnection();
-        $sql='SELECT * 
-                FROM playlist ';
-        $resulSet=$conn->executeQuery($sql);
-
-        return $resulSet->fetchAllAssociative();
+        return $this->findAll();;
+    }
+    public function getCoincidenciasPlaylist($subcadena) : array {
+        return $this->createQueryBuilder('p')
+            ->where('p.nombre LIKE :subcadena')
+            ->setParameter('subcadena', '%' . $subcadena . '%')
+            ->getQuery()
+            ->getResult();
     }
     
    public function getPlaylistMasEscuchadas($num=3): array

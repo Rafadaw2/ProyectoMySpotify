@@ -14,9 +14,16 @@
 
         <div id="contBusqueda">
             <input type="text" id="songName" placeholder="¿Qué canción quieres escuchar?">
-            <a id="contLupa" href="" onclick="modificarSrc()">
-                <img id="lupa" src="{{asset('img/buscar.png')}}" alt="">
-            </a>
+            {% if app.user %}
+                <a id="contLupa" onclick="buscarConLog()">
+                    <img id="lupa" src="{{asset('img/buscar.png')}}" alt="">
+                </a>
+            {% else %}
+                <a id="contLupa" onclick="buscarSinLog()">
+                    <img id="lupa" src="{{asset('img/buscar.png')}}" alt="">
+                </a>
+            {% endif %}
+       
         </div>
 
         <a id="contCuenta" href="">
@@ -27,17 +34,23 @@
     <div class="divNav">
         <nav class="nav">
             <ul>
-                <li><a href="/user/cancion">Canciones</a></li>
-                <li><a href="/user/playlist">Playlist</a></li>
+                <li><a href="/cancion">Canciones</a></li>
+                {% if app.user %}
+                    <li><a href="/user/playlist">Playlist</a></li>
+                {% else %}
+                    <li><a href="/playlist">Playlist</a></li>
+                {% endif %}
+                
                 {% if app.user %}
                     <li><a href="/logout">Cerrar sesión</a></li>
                 {% else %}
                     <li><a href="/login">Iniciar sesión</a></li>
                 {% endif %}
+                <li><a href="/user/playlist/form">Crear Playlist</a></li>
             </ul>
         </nav>
 
-        <main class="contenido">
+        <main class="contenido" id="contenido">
             {% block titulo %}{% endblock %}
             {% block contenido %}{% endblock %}
         </main>
