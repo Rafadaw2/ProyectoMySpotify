@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\Cancion;
 use App\Entity\Playlist;
 use App\Entity\Usuario;
@@ -12,13 +11,22 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
+use DateTime;
+use Psr\Log\LoggerInterface;
 
 final class EstadisticasController extends AbstractController
 {
     #[Route('/manager/estadisticas', name: 'app_estadisticas')]
-    public function getIndex(): Response
+    public function getIndex(LoggerInterface $tracabilityLogger): Response
     {
+        $usuario = $this->getUser();  
+        $marcaTemporal=new DateTime();
+        $marcaTemporal=$marcaTemporal->format('Y-m-d H:i:s');
+        
+        $tracabilityLogger->info('Consulta estadisticas', [
+            'usuario' => $usuario->getNombre(),
+            'fecha'=> $marcaTemporal,
+        ]);
         return $this->render('estadisticas/index.html.twig', [
             'titulo' => 'Bienvenido al dashboard Manager',
         ]);

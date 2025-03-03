@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use DateTime;
+use Psr\Log\LoggerInterface;
 
 final class PlaylistController extends AbstractController
 {
@@ -119,7 +121,7 @@ final class PlaylistController extends AbstractController
     }
 
     #[Route('/user/playlist/new', name: 'new_playlist')]
-    public function new(EntityManagerInterface $entityManager, Request $request): JsonResponse
+    public function new(EntityManagerInterface $entityManager, Request $request, LoggerInterface $tracabilityLogger): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -149,6 +151,17 @@ final class PlaylistController extends AbstractController
     
         $entityManager->persist($playlist);
         $entityManager->flush();
+
+        //traza
+        $usuario = $this->getUser();  
+        $marcaTemporal=new DateTime();
+        $marcaTemporal=$marcaTemporal->format('Y-m-d H:i:s');
+        
+        $tracabilityLogger->info('Crea playlist', [
+            'usuario' => $usuario->getNombre(),
+            'nombre' => $nombrePlaylist,
+            'fecha'=> $marcaTemporal,
+        ]);
     
         return new JsonResponse([
             'status' => 'success',
