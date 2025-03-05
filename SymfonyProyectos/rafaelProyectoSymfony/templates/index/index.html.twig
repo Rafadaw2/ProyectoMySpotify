@@ -3,7 +3,7 @@
 {% block contenido %}
 <div class="canciones">
 {% for cancion in canciones %}
-            <figure onclick="modificarSrc('{{cancion.archivo}}')">
+            <figure class="iframeCancion" onclick="modificarSrc('{{cancion.archivo}}')">
                 <img class="caratula" src="{{ asset('img/' ~ cancion.autor ~ '.jpg') }}" alt="">
 
                 </img>
@@ -16,7 +16,7 @@
 <div class="canciones">
 {% for playlist in playlists %}
         <a href="/playlist/cancions/{{playlist.id}}">
-            <figure>
+            <figure class="iframeCancion">
                 <img class="caratula" src="{{ asset('img/playlist.jpg') }}" alt="">
 
                 </img>
