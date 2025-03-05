@@ -11,13 +11,30 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
+use DateTime;
+use Psr\Log\LoggerInterface;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
+    private LoggerInterface $tracabilityLogger;
+
+    public function __construct(LoggerInterface $tracabilityLogger)
+    {
+        $this->tracabilityLogger = $tracabilityLogger;
+    }
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
+
+        $usuario = $this->getUser();  
+        $marcaTemporal=new DateTime();
+        $marcaTemporal=$marcaTemporal->format('Y-m-d H:i:s');
+        
+        $this->tracabilityLogger->info('Acceso admin al dashboard ', [
+            'usuario' => $usuario->getNombre(),
+            'fecha'=> $marcaTemporal,
+        ]);
         return $this->render('admin/dashboard.html.twig');
 
         // Option 1. You can make your dashboard redirect to some common page of your backend

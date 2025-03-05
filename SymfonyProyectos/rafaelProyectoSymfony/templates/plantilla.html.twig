@@ -47,6 +47,13 @@
                     <li><a href="/login">Iniciar sesión</a></li>
                 {% endif %}
                 <li><a href="/user/playlist/form">Crear Playlist</a></li>
+                {% if is_granted('ROLE_MANAGER') %}
+                    <li><a href="/manager/estadisticas">Estadísticas</a></li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="/admin">Panel de Admin</a></li>
+                {% endif %}
+
             </ul>
         </nav>
 

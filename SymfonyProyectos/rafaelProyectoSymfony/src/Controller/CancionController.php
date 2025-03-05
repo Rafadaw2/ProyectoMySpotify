@@ -47,15 +47,17 @@ final class CancionController extends AbstractController
     #[Route('/cancion/{songName}/play', name: 'play_music', methods:['GET'])]
     public function playMusic(string $songName, LoggerInterface $tracabilityLogger): Response
     {
-     
+        
         $usuario = $this->getUser();
-
-        $marcaTemporal=new DateTime();
+        if($usuario){
+            $marcaTemporal=new DateTime();
         $marcaTemporal=$marcaTemporal->format('Y-m-d H:i:s');
         $tracabilityLogger->info('Escucha canción', [
             'usuario' => $usuario->getNombre(),
             'fecha'=> $marcaTemporal,
         ]);
+        }
+        
         $musicDirectory=$this->getParameter('kernel.project_dir').'/songs/';
         $filePath=$musicDirectory.$songName;
         if(!file_exists($filePath)){
