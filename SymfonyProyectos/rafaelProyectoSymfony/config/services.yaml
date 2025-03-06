@@ -26,6 +26,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\LoginSuccessEvent, method: registroLogin }
             - { name: 'kernel.event_listener', event: 'Symfony\Component\Security\Http\Event\LogoutEvent', method: 'registroLogout' }
-
+            - { name: 'kernel.event_listener', event: 'EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent', method: 'registroAccionPersistencia' }
+            - { name: 'kernel.event_listener', event: 'EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityUpdatedEvent', method: 'registroAccionActualizacion' }
+            - { name: 'kernel.event_listener', event: 'EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityDeletedEvent', method: 'registroAccionEliminacion' }
+    App\Security\AccessDeniedHandler:
+        tags:
+            - { name: 'security.access_denied_handler' }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

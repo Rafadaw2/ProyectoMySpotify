@@ -13,12 +13,13 @@
         <a href="/index"><img id="logoSpotify" src="{{asset('img/logoSpotify.png')}}" alt=""  ></a>
 
         <div id="contBusqueda">
-            <input type="text" id="songName" placeholder="¿Qué canción quieres escuchar?">
             {% if app.user %}
+            <input type="text" id="songName" placeholder="¿Qué canción quieres escuchar?">
                 <a id="contLupa" onclick="buscarConLog()">
                     <img id="lupa" src="{{asset('img/buscar.png')}}" alt="">
                 </a>
             {% else %}
+            <input type="text" id="songName" placeholder="¿Qué canción quieres escuchar?">
                 <a id="contLupa" onclick="buscarSinLog()">
                     <img id="lupa" src="{{asset('img/buscar.png')}}" alt="">
                 </a>

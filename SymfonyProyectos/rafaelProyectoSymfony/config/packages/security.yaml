@@ -30,6 +30,7 @@ security:
                 login_path: app_login
                 check_path: app_login
                 default_target_path: app_index
+            access_denied_url: /acceso-denegado
     role_hierarchy:
         ROLE_USER: []      
         ROLE_MANAGER: []   
