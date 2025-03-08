@@ -24,6 +24,22 @@ final class CancionController extends AbstractController
             'canciones' => $canciones,
         ]);
     }
+    #[Route('/cancionJson', name: 'cancionesJson')]
+    public function cancionesJson(CancionRepository $cancionRepository): Response
+    {
+        $canciones= $cancionRepository->getCanciones();
+        $respuesta=[];
+        foreach ($canciones as $cancion) {
+            
+            $respuesta[] = [
+                'id'=>$cancion['id'],
+                'titulo' => $cancion['titulo'],
+                'likes'=>$cancion['likes'],
+                'ruta' => $cancion['archivo']
+            ];
+        }
+        return $this->json($respuesta);
+    }
     // #[Route('/cancion/new', name: 'new_cancion')]
     // public function new(EntityManagerInterface $entityManager): Response
     // {

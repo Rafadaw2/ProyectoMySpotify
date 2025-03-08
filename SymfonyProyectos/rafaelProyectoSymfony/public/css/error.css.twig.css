@@ -1,0 +1,7 @@
+/*css pagina de error*/
+#bodyError{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
