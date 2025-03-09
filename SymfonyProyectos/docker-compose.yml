@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: symfony-spotify
     volumes:
-      - /home/rafa/Documentos/ProyectoMySpotify:/var/www/symfony  # Mapeo del proyecto
+      - /home/rafa/Documentos/ProyectoMySpotify/SymfonyProyectos:/var/www/symfony  # Mapeo del proyecto
       #- C:\Apache24\htdocs\ProyectoMySpotify\SymfonyProyectos:/var/www/symfony
     working_dir: /var/www/symfony
     ports:
@@ -35,6 +35,6 @@ services:
 networks:
   symfony-network:
     driver: bridge
-
+ 
 
 

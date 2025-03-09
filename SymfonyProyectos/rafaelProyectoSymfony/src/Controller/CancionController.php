@@ -34,6 +34,7 @@ final class CancionController extends AbstractController
             $respuesta[] = [
                 'id'=>$cancion['id'],
                 'titulo' => $cancion['titulo'],
+                'autor' => $cancion['autor'],
                 'likes'=>$cancion['likes'],
                 'ruta' => $cancion['archivo']
             ];
